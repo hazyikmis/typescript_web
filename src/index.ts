@@ -1,30 +1,44 @@
+import axios from 'axios';
+
+/*
+axios.post('http://localhost:3000/users', {
+  name: 'myname',
+  age: 20,
+});
+//check the network tab of F12
+*/
+
+//axios.get('http://localhost:3000/users/1');
+//check the network tab of F12
+
 import { User } from './models/User';
 
-const user = new User({ name: 'halo', age: 44 });
-const user2 = new User({}); //ONLY POSSIBLE AFTER PUTTING "?" TO END OF PROPS IN INTERFACE DECLARATION
+// fetching a user. setTimeout used because fetch is async function / returns a promise / this promise should be waited to be resolved
+/*
+const user = new User({ id: 1 });
 
-console.log(user.get('name'));
-console.log(user.get('age'));
+user.fetch();
 
-user.set({ name: 'emo', age: 41 });
-user.set({ name: 'yamo' }); //INITIALLY NOT WORKS! TO FIX THIS, we have putted "?" after every prop name: CHECK User class
+setTimeout(() => {
+  //console.log(user);
+  console.log(user.get('name'));
+}, 4000);
+*/
 
-console.log(user.get('name'));
-console.log(user.get('age'));
+/*
+// saving a user which is already in the db.json.
+const user = new User({ id: 1 });
+user.set({ name: 'newName', age: 999 });
+user.save();
 
-user.on('change', () => {
-  console.log('Change #1');
+// saving a new user which is NOT in the db.json.
+const user2 = new User({ name: 'new User', age: 32 });
+user2.save();
+*/
+
+const user2 = new User({ name: 'new User', age: 32 });
+user2.events.on('change', () => {
+  console.log('change!');
 });
 
-user.on('change', () => {
-  console.log('Change #2');
-});
-
-user.on('save', () => {
-  console.log('Save');
-});
-
-console.log(user);
-
-user.trigger('change');
-user.trigger('save');
+user2.events.trigger('change');
