@@ -35,7 +35,45 @@ Usage:
 
 - create a dir, for example "apiserver"
 - inside "apiserver" dir, run the command "npm init"
-- npm install --save json-servercreate ""db.json" file, and fill the file with dummy data
+- npm install --save json-server
+- create ""db.json" file, and fill the file with dummy data
 - open the "package.json" file, remove the "test" under "scripts". Add:"start": "json-server -p 3001 -w db.json"
 - npm start
 - NOW YOU CAN SEND RESTFUL API CALLS TO THE SERVER...(You can add, delete, update, list the records in the "db.json")
+
+NOTE: If you install with "npm install -g json-server" (globally) then you can call/run "json-server" directly from another terminal (without dealing with package.json):
+
+```
+$ json-server -w db.json
+```
+
+> Format of db.json:
+
+```
+{
+  "users": []
+}
+```
+
+# Basic Structure
+
+In one of the terminal windows, json-server is running(installed with -g, executed by "json-server -w db.json" command), in the another window, parcel is running (parcel index.html). By doing like that, we have installed very simple example of server/client structure.
+
+Or you can add "scripts" section like below into the package.json. And then, on one of the terminals execute "npm run start:db" and on the other "npm run start:parcel"
+
+```
+"scripts": {
+  "start:db": "json-server -w db.json",
+  "start:parcel": "parcel index.html"
+}
+```
+
+# Applying changes on .gitignore
+
+> Sometimes changes on the .gitignore "ignored" by git. If you add new folders and/or files to .gitignore, but git still continues tracking them, then you can execute the commands below:
+
+```
+git rm -r --cached .
+git add .
+git commit -m "fixed untracked files"
+```
