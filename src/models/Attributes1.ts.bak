@@ -1,0 +1,29 @@
+import { UserProps } from './User';
+
+export class Attributes<T> {
+  constructor(private data: T) {}
+
+  // get(propName: string): string | number {
+  //   return this.data[propName];
+  // }
+  //check: /zzz_info/10 & 11
+  //K is generic constraint, If T is UserProps type then K could be only "name", "age" and "id", because its one its (T's) keys
+  //Do not forget: K & T are "types", and T[K] is "string" or "number" or whatever type of real key
+  get<K extends keyof T>(key: K): T[K] {
+    return this.data[key];
+  }
+
+  set(newData: T): void {
+    Object.assign(this.data, newData);
+  }
+}
+
+const attrs = new Attributes<UserProps>({
+  id: 5,
+  age: 20,
+  name: 'melo',
+});
+
+const name = attrs.get('name'); //IF YOU HOVER OVER "name" const, THEN YOU'LL SEE ITS "string"
+const age = attrs.get('age'); //IF YOU HOVER OVER "age" const, THEN YOU'LL SEE ITS "number"
+//THIS AUTOMATIC & CORRECT typing OF "name" & "age" IS RESULT OF HOW WE'VE DEFINED "get" FUNCTION: get<K extends keyof T>(key: K): T[K] {...}

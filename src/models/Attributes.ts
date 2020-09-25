@@ -1,34 +1,13 @@
-import { UserProps } from './User';
-
 export class Attributes<T> {
   constructor(private data: T) {}
 
-  get(propName: string): string | number {
-    return this.data[propName];
+  //K is generic constraint, If T is UserProps type then K could be only "name", "age" and "id", because its one its (T's) keys
+  //Do not forget: K & T are "types", and T[K] is "string" or "number" or whatever type of real key
+  get<K extends keyof T>(key: K): T[K] {
+    return this.data[key];
   }
 
   set(newData: T): void {
     Object.assign(this.data, newData);
   }
 }
-
-const attrs = new Attributes<UserProps>({ id: 5, name: 'tom', age: 21 });
-
-//const id = attrs.get('id');  //in this case id is number or string
-//const id:number = attrs.get('id');  //not allowed by TypeScript because it might be a string
-const id = attrs.get('id') as number; //"type assertion"
-
-/*
-export class Attributes {
-  constructor(private data: UserProps) {}
-
-  get(propName: string): string | number {
-    return this.data[propName];
-  }
-
-  set(newData: UserProps): void {
-    Object.assign(this.data, newData);
-  }
-
-}
-*/
