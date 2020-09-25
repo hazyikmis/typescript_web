@@ -1,5 +1,6 @@
 type Callback = () => void;
 
+//Previously, on and trigger methods were in the User class
 export class Eventing {
   //we don't know which events in the future
   events: { [key: string]: Callback[] } = {};
