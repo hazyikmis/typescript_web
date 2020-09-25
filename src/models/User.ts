@@ -12,7 +12,14 @@ const rootUrl = 'http://localhost:3000/users';
 export class User {
   public events: Eventing = new Eventing();
   public sync: Sync<UserProps> = new Sync<UserProps>(rootUrl);
+}
 
+/*
+export class User {
+  public events: Eventing = new Eventing();
+  public sync: Sync<UserProps> = new Sync<UserProps>(rootUrl);
+
+  //the constructor & get & set methods moved to Attributes class (extraction!)
   constructor(private data: UserProps) {}
 
   get(propName: string): string | number {
@@ -23,3 +30,4 @@ export class User {
     Object.assign(this.data, newData);
   }
 }
+*/
