@@ -68,6 +68,31 @@ Or you can add "scripts" section like below into the package.json. And then, on 
 }
 ```
 
+# In TypeScript, strings can be types!
+
+```
+type BestName = 'halo';
+const printName = (name: BestName): void => {
+  ...
+}
+printName('emo'); // X
+printName('yamo'); // X
+printName('halo'); // OK
+
+```
+
+> check the code below (Attributes.ts, Attributes1.ts.bak): REALLY IMPORTANT!
+
+```
+//check: /zzz_info/10 & 11
+//K is generic constraint; If T is UserProps type then K could be only name, age and id, because its one its (T's) keys
+//Do not forget: K & T are "types", and T[K] is "string" or "number" or whatever type of real key
+
+get<K extends keyof T>(key: K): T[K] {
+    return this.data[key];
+}
+```
+
 # Applying changes on .gitignore
 
 > Sometimes changes on the .gitignore "ignored" by git. If you add new folders and/or files to .gitignore, but git still continues tracking them, then you can execute the commands below:
