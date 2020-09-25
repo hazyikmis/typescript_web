@@ -5,7 +5,8 @@ export class Eventing {
   //we don't know which events in the future
   events: { [key: string]: Callback[] } = {};
 
-  on(eventName: string, callback: Callback): void {
+  //on(eventName: string, callback: Callback): void {
+  on = (eventName: string, callback: Callback): void => {
     //quick example
     //this.events["anEvent"] = [callback]
     //this.events["anotherEvent"] = [() => {}]
@@ -14,9 +15,10 @@ export class Eventing {
     const handlers = this.events[eventName] || [];
     handlers.push(callback);
     this.events[eventName] = handlers;
-  }
+  };
 
-  trigger(eventName: string): void {
+  //trigger(eventName: string): void {
+  trigger = (eventName: string): void => {
     const handlers = this.events[eventName];
     if (!handlers || handlers.length === 0) {
       return;
@@ -24,5 +26,5 @@ export class Eventing {
     handlers.forEach((callback) => {
       callback();
     });
-  }
+  };
 }

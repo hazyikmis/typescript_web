@@ -2,33 +2,41 @@ import { User } from './models/User';
 
 const user = new User({ name: 'Ghengiz', age: 45 });
 
-//THIS IS NOT WHAT WE WANT!
-//WE WANT TO CALL METHODS ONLY FROM USER CLASS -> DELEGATION
+console.log(user.get('name'));
+//"get" method (in Attributes class) /property (in User class) refers to "user" in Attributes class.
+//But it must refer to "Attributes" class itself. "data" property defined in Attributes, not in User.
+//The solution for this problem is, defining "get" method as "arrow function" in the Attributes class.
+
+const on = user.on;
+
+//the "on" call below does not call /execute callback, just assigns the callback to "change" keyword
+on('change', () => {
+  console.log('user changed!');
+});
+
+// OR, directly call is also possible!
+
+//the "on" call below does not call /execute callback, just assigns the callback to "save" keyword
+user.on('save', () => {
+  console.log('user saved!');
+});
+
+//here is the calls/executions!
+user.trigger('change');
+user.trigger('save');
+
 /*
-user.attributes.data; // not accessible directly, its private property
-user.attributes.get('id');
-user.attributes.get('name');
-user.attributes.get('age');
-
-user.sync.save();
-*/
-
-//Quick reminder on accessors
-
-class Person {
-  constructor(public firstName: string, public lastName: string) {}
-
-  fullName(): string {
-    return `${this.firstName} ${this.lastName}`;
-  }
-
-  //same function above, but it's getter from now on!, and when calling it, no need to append () at the end;
-  //WE CAN DEFINE FUNCTIONS AS "GETTER" IF THEY ARE USED FOR JUST RETRIEVING DATA, NOT FOR CHANGING SOMETHING
-  get allName(): string {
-    return `${this.firstName} ${this.lastName}`;
+const colors = {
+  color: 'red';
+  printColor() {
+    console.log(this.color)
   }
 }
 
-const person = new Person('first', 'last');
-console.log(person.fullName());
-console.log(person.allName);
+colors.printColor(); //NO PROBLEM, "this" REFERS TO "colors"
+
+//HERE IS THE PROBLEM:
+//reference to "colors" lost
+const printCol = colors.printColor;
+printCol();  //try to execute "undefined.printColor()"
+*/
