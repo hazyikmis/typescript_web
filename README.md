@@ -93,6 +93,29 @@ get<K extends keyof T>(key: K): T[K] {
 }
 ```
 
+# Accessors & Getter methods in JS
+
+WE CAN DEFINE FUNCTIONS AS "GETTER" IF THEY ARE USED FOR JUST RETRIEVING DATA, NOT FOR CHANGING SOMETHING
+
+```
+class Person {
+  constructor(public firstName: string, public lastName: string) {}
+
+  fullName(): string {
+    return `${this.firstName} ${this.lastName}`;
+  }
+
+  //same function above, but it's getter from now on!, and when calling it, no need to append () at the end;
+  get allName(): string {
+    return `${this.firstName} ${this.lastName}`;
+  }
+}
+
+const person = new Person('first', 'last');
+console.log(person.fullName());
+console.log(person.allName);
+```
+
 # Applying changes on .gitignore
 
 > Sometimes changes on the .gitignore "ignored" by git. If you add new folders and/or files to .gitignore, but git still continues tracking them, then you can execute the commands below:
