@@ -28,17 +28,21 @@ export class Model<T extends HasId> {
   ) {}
 
   //all the methods below here cut from User class and moved to here
-  get on() {
-    return this.events.on;
-  }
 
-  get trigger() {
-    return this.events.trigger;
-  }
+  // get on() {
+  //   return this.events.on;
+  // }
+  on = this.events.on;
 
-  get get() {
-    return this.attributes.get;
-  }
+  // get trigger() {
+  //   return this.events.trigger;
+  // }
+  trigger = this.events.trigger;
+
+  // get get() {
+  //   return this.attributes.get;
+  // }
+  get = this.attributes.get;
 
   set(update: T): void {
     this.attributes.set(update);

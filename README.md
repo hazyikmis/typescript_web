@@ -165,6 +165,21 @@ printCol();  //try to execute "undefined.printColor()"
 
 SOLUTION: Define "printColor" function as an "ARROW FUNCTION" inside "colors" class/object
 
+# Shorthand version of Accessor & Getter methods (Passhthrough Methods):
+
+Check Model.ts
+
+```
+get on() {
+  return this.events.on;
+}
+
+//Could be converted to:
+//Treated on them as they are properties!
+
+on = this.events.on;
+```
+
 # Creating pre-configured instance of a class (using static methods)
 
 > here is the part of User.ts... where static user creation method defined (buildUser)
@@ -190,6 +205,68 @@ export class User extends Model<UserProps> {
   //... other props
   //... other methods
 }
+```
+
+# Order of operations:
+
+Here is the problematic situation:
+
+```
+class Engine {
+  start() { ... }
+}
+
+class Car {
+  engine: Engine;
+  constructor() {
+    this.engine = new Engine();
+  }
+  start = this.engine.start;
+}
+```
+
+This TypeScript code above creates vanilla JS code below (partial...):
+
+```
+...
+function Car() {
+  //this is constructor function
+  this.start = this.engine.start;
+  this.engine = new Engine();
+}
+...
+```
+
+You see the PROBLEM? new engine created and assigned to this.engine AFTER assigning this.start = this.engine.start. ORDER OF THESE 2 LINES SHOULD BE REVERSE.
+
+RULE: All code in constructor {...} executed after the other assignments in the class.
+(This is the reason of wrong order of lines)
+
+RATHER THAN DEFINING THE CONSTRUCTOR LIKE ABOVE, LETS MAKE IT LIKE BELOW:
+
+```
+class Engine {
+  start() { ... }
+}
+
+class Car {
+  //engine: Engine; // NO NEED ANYMORE BECAUSE OF THE CHANGE DONE IN THE CONSTRUCTOR BELOW
+  constructor(public engine: Engine) {}
+  start = this.engine.start;
+}
+```
+
+In this case, created JS code like below and it works without any PROBLEM (In correct order):
+
+```
+...
+function Car() {
+  //this is constructor function
+  this.engine = new Engine();
+  this.start = this.engine.start;
+
+}
+...
 ```
 
 # Applying changes on .gitignore
