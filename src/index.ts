@@ -1,5 +1,12 @@
 import { User } from './models/User';
 
+const user = User.buildUser({ id: 1 });
+user.on('change', () => {
+  console.log(user);
+});
+user.fetch(); //fetch defined in Model, and it calls sync.fetch actually
+
+/*
 const user = new User({ name: 'Ghengiz', age: 45 });
 
 console.log(user.get('name'));
@@ -46,6 +53,8 @@ user3.on('save', () => {
 });
 
 user3.save();
+
+*/
 
 /*
 const colors = {

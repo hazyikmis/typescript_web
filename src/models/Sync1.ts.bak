@@ -1,3 +1,5 @@
+//THE NAME OF THIS FILE/CLASS CHANGED TO "ApiSync"
+
 import axios, { AxiosPromise } from 'axios';
 
 //Previously, fetch and save methods were in the User class

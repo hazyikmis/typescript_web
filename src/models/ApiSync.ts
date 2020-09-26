@@ -1,0 +1,30 @@
+import axios, { AxiosPromise } from 'axios';
+
+//Previously, fetch and save methods were in the User class
+
+//first, design/refactor this class according to Option #1 (zzz_info/09_3_options...)
+//then, convert this class to "generic" class!
+
+interface HasId {
+  id?: number;
+}
+
+export class ApiSync<T extends HasId> {
+  constructor(public rootUrl: string) {}
+
+  fetch(id: number): AxiosPromise {
+    return axios.get(`${this.rootUrl}/${id}`);
+  }
+
+  save(data: T): AxiosPromise {
+    //without interface "HasID" the line below throws an error!
+    const { id } = data;
+    if (id) {
+      //put - update user
+      return axios.put(`${this.rootUrl}/${id}`, data);
+    } else {
+      //post - create new user
+      return axios.post(this.rootUrl, data);
+    }
+  }
+}

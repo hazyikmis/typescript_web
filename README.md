@@ -165,6 +165,33 @@ printCol();  //try to execute "undefined.printColor()"
 
 SOLUTION: Define "printColor" function as an "ARROW FUNCTION" inside "colors" class/object
 
+# Creating pre-configured instance of a class (using static methods)
+
+> here is the part of User.ts... where static user creation method defined (buildUser)
+
+```
+export class User extends Model<UserProps> {
+
+  //this static method will be used for creating pre-configured user instances
+  //otherwise, for ex in the index.ts, we need to call like that:
+  //const user = new User(attributes, events, sync)
+  //-- we are passing these params because they are defined in the "Model" constructor which User class extends it
+  //but with the help of this static method below its enough to call:
+  //const user = User.buildUser(attrs);  //ATTENTION: WITHOUT "new"  - because "new" used in userBuild method
+  //As you see rather than passing 3 params, its enough to pass 1 params now
+
+  static buildUser(attrs: UserProps): User {
+    return new User(
+      new Attributes<UserProps>(attrs),
+      new Eventing(),
+      new ApiSync<UserProps>(rootUrl)
+    )
+  }
+  //... other props
+  //... other methods
+}
+```
+
 # Applying changes on .gitignore
 
 > Sometimes changes on the .gitignore "ignored" by git. If you add new folders and/or files to .gitignore, but git still continues tracking them, then you can execute the commands below:
