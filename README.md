@@ -239,7 +239,7 @@ function Car() {
 
 You see the PROBLEM? new engine created and assigned to this.engine AFTER assigning this.start = this.engine.start. ORDER OF THESE 2 LINES SHOULD BE REVERSE.
 
-RULE: All code in constructor {...} executed after the other assignments in the class.
+RULE-1: All code in constructor {...} executed after the other assignments in the class.
 (This is the reason of wrong order of lines)
 
 RATHER THAN DEFINING THE CONSTRUCTOR LIKE ABOVE, LETS MAKE IT LIKE BELOW:
@@ -268,6 +268,10 @@ function Car() {
 }
 ...
 ```
+
+RULE-2: All code in constructor parameters (...) executed before everything else in the class.
+For all defined parameters -public or private- new instances created automatically
+(This is the reason of correct order of lines)
 
 # Applying changes on .gitignore
 
