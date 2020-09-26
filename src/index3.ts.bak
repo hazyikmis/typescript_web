@@ -25,28 +25,6 @@ user.on('save', () => {
 user.trigger('change');
 user.trigger('save');
 
-//"set" function test
-user.set({ name: 'mamud' });
-
-//"fetch" function test
-const user2 = new User({ id: 3 });
-
-user2.on('change', () => {
-  console.log(user2);
-});
-
-user2.fetch();
-
-//testing user.save:
-
-const user3 = new User({ id: 5, name: 'newer name', age: 0 });
-
-user3.on('save', () => {
-  console.log(user3);
-});
-
-user3.save();
-
 /*
 const colors = {
   color: 'red';

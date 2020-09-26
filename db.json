@@ -11,7 +11,7 @@
       "id": 2
     },
     {
-      "name": "new User",
+      "name": "new-User",
       "age": 32,
       "id": 3
     },
@@ -21,9 +21,9 @@
       "id": 4
     },
     {
-      "name": "new User",
-      "age": 32,
-      "id": 5
+      "id": 5,
+      "name": "newer name",
+      "age": 0
     },
     {
       "name": "new User",

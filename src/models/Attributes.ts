@@ -1,3 +1,5 @@
+import { UserProps } from './User';
+
 export class Attributes<T> {
   constructor(private data: T) {}
 
@@ -10,5 +12,9 @@ export class Attributes<T> {
 
   set(newData: T): void {
     Object.assign(this.data, newData);
+  }
+
+  getAll(): T {
+    return this.data;
   }
 }
