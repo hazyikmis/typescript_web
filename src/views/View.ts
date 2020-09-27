@@ -15,11 +15,18 @@ import { Model } from '../models/Model';
 //export abstract class View<T> {
 //export abstract class View<T extends ModelForView> {
 export abstract class View<T extends Model<K>, K> {
+  regions: { [key: string]: Element } = {};
+
   constructor(public parent: Element, public model: T) {
     this.bindModel();
   }
 
   abstract template(): string;
+
+  regionsMap(): { [key: string]: string } {
+    return {};
+  }
+
   //abstract eventsMap(): { [key: string]: () => void }; //NO NEED TO BE DEFINED AS "abstract"
   eventsMap(): { [key: string]: () => void } {
     return {};
@@ -42,6 +49,26 @@ export abstract class View<T extends Model<K>, K> {
     }
   }
 
+  mapRegions(fragment: DocumentFragment): void {
+    const regionsMap = this.regionsMap();
+
+    for (let key in regionsMap) {
+      const selector = regionsMap[key];
+      //this.regions[key] is initially empty
+      //this.regions[key] = fragment.querySelector(selector); //type-guard required
+      const element = fragment.querySelector(selector);
+      //type-guard
+      if (element) {
+        this.regions[key] = element;
+      }
+    }
+  }
+
+  onRender(): void {}
+  //actually this not called, since its NOT written as ARROW Function and called as "this.onRender()" below in "render" method,
+  //the "onRender" defined in "onRender" called.
+  //defined here as dummy function because, the code below, when calling "this.onRender()" should not throw an error
+
   render(): void {
     this.parent.innerHTML = ''; //first remove all elements under parent, otherwise, in the 2nd or 3rd renders add new instances...
     //normally Angular & React uses more clever ways when re-rendering elements on the DOM
@@ -51,6 +78,10 @@ export abstract class View<T extends Model<K>, K> {
     templateElement.innerHTML = this.template();
 
     this.bindEvents(templateElement.content);
+
+    this.mapRegions(templateElement.content);
+
+    this.onRender(); //just before appending to DOM
 
     this.parent.append(templateElement.content);
   }
