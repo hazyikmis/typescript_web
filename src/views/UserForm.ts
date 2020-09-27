@@ -25,20 +25,26 @@ want to watch for inside of our HTML snippet to the different functions that we 
   eventsMap(): { [key: string]: () => void } {
     //in this approach, "key"s should be parsed!
     //of course, react and/or angular have much much better approaches in their frameworks/libraries
+    //problem in here is: click event added to all buttons, there should be some id/class of buttons
     return {
-      'click:button': this.onButtonClick,
+      //'click:button': this.onButtonClick,
       //'hover:h1': this.onHeaderHover,
-      'mouseenter:h1': this.onHeaderHover,
+      //'mouseenter:h1': this.onHeaderHover,
       // 'drag:div': this.onDragDiv,
+      'click:.set-age': this.onSetAgeClick,
     };
   }
 
-  onButtonClick(): void {
-    console.log('Hi there');
-  }
+  // onButtonClick(): void {
+  //   console.log('Hi there');
+  // }
 
-  onHeaderHover(): void {
-    console.log('Header was hovered!');
+  // onHeaderHover(): void {
+  //   console.log('Header was hovered!');
+  // }
+
+  onSetAgeClick(): void {
+    console.log('Hi therexxx');
   }
 
   // template(): string {
@@ -53,11 +59,12 @@ want to watch for inside of our HTML snippet to the different functions that we 
   template(): string {
     return `
       <div>
-        <h1>User Form</h1>
-        <div>User name: ${this.model.get('name')}</div>
+      <h1>User Form</h1>
+      <div>User name: ${this.model.get('name')}</div>
         <div>User age: ${this.model.get('age')}</div>
         <input />
         <button>Click Me!</button>
+        <button class='set-age'>Set Random Age</button>
       </div>
     `;
   }
