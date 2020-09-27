@@ -24,7 +24,7 @@ export class Model<T extends HasId> {
   constructor(
     private attributes: ModelAttributes<T>,
     private events: Events,
-    private sync: Sync<T>
+    private sync: Sync<T> //yes, named "sync", but in "User" class, called/used "ApiSync.ts", just named in here sync & Sync
   ) {}
 
   //all the methods below here cut from User class and moved to here

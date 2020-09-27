@@ -4,7 +4,7 @@ import { UserForm } from './views/UserForm';
 import { User } from './models/User';
 
 //const userForm = new UserForm(document.getElementById('root'));
-const user = User.buildUser({ name: 'ali', age: 20 });
+const user = User.buildUser({ name: 'ali veli', age: 20 });
 const root = document.getElementById('root');
 //type-guard
 if (root) {
