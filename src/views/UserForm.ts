@@ -6,7 +6,27 @@ export class UserForm {
   //parent: Element; //Element is the most generic class for insertion to DOM
 
   //constructor(public parent: Element) {}
-  constructor(public parent: Element, public model: User) {}
+  //constructor(public parent: Element, public model: User) {}
+  /*
+  constructor(public parent: Element, public model: User) {
+    //if something changes (some data) on model, this meas that "change" event triggered
+    this.model.on('change', () => {
+      this.render();
+    });
+  }
+  */
+
+  //In order to keep the constructor as simplw as possible:
+  constructor(public parent: Element, public model: User) {
+    //if something changes (some data) on model, this meas that "change" event triggered
+    this.bindModel();
+  }
+
+  bindModel(): void {
+    this.model.on('change', () => {
+      this.render();
+    });
+  }
 
   /*
 So we need to somehow express to typescript that hey we're going to return an object and 
@@ -43,9 +63,12 @@ want to watch for inside of our HTML snippet to the different functions that we 
   //   console.log('Header was hovered!');
   // }
 
-  onSetAgeClick(): void {
-    console.log('Hi therexxx');
-  }
+  //onSetAgeClick(): void {
+  onSetAgeClick = (): void => {
+    //console.log('Set Age Clicked!');
+    this.model.setRandomAge();
+    //console.log(this.model.get('age'));
+  };
 
   // template(): string {
   //   return `
@@ -82,6 +105,10 @@ want to watch for inside of our HTML snippet to the different functions that we 
   }
 
   render(): void {
+    this.parent.innerHTML = ''; //first remove all elements under parent, otherwise, in the 2nd or 3rd renders add new instances...
+    //normally Angular & React uses more clever ways when re-rendering elements on the DOM
+    //Bu we are directly clearing everything and re-rendering from scratch again...
+
     const templateElement = document.createElement('template');
     templateElement.innerHTML = this.template();
 
