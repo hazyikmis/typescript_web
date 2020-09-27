@@ -1,6 +1,8 @@
+import { User, UserProps } from '../models/User';
 import { View } from './View';
 
-export class UserForm extends View {
+//export class UserForm extends View {
+export class UserForm extends View<User, UserProps> {
   //eventsMap() {
   eventsMap(): { [key: string]: () => void } {
     //in this approach, "key"s should be parsed!

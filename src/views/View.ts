@@ -1,18 +1,20 @@
 //import { User } from '../models/User'; //Normally this "View" should be not work with only User, keep that at first, then refactor
+import { Model } from '../models/Model';
 
 //export abstract class View {
 //Normally this "View" should be not work with only User, keep that at first, then refactor
 //We want to use arbitrary any model, not only "User"
 //constructor(public parent: Element, public model: User) {
 
-interface ModelForView {
-  on(eventName: string, callback: () => void): void;
-}
+//interface ModelForView {
+//  on(eventName: string, callback: () => void): void;
+//}
 //ModelForView used as a generic constraint for class View
 
 //Class View is now converted to GENERIC class (by accepting T)
 //export abstract class View<T> {
-export abstract class View<T extends ModelForView> {
+//export abstract class View<T extends ModelForView> {
+export abstract class View<T extends Model<K>, K> {
   constructor(public parent: Element, public model: T) {
     this.bindModel();
   }
