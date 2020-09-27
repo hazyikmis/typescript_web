@@ -1,12 +1,9 @@
-import { User } from '../models/User';
-
 export class UserForm {
   //we should tell this class exactly where to insert "user form". Rather than defining like that
   //we can tell inside constructor parameters...
   //parent: Element; //Element is the most generic class for insertion to DOM
 
-  //constructor(public parent: Element) {}
-  constructor(public parent: Element, public model: User) {}
+  constructor(public parent: Element) {}
 
   /*
 So we need to somehow express to typescript that hey we're going to return an object and 
@@ -41,21 +38,10 @@ want to watch for inside of our HTML snippet to the different functions that we 
     console.log('Header was hovered!');
   }
 
-  // template(): string {
-  //   return `
-  //     <div>
-  //       <h1>User Form</h1>
-  //       <input />
-  //       <button>Click Me!</button>
-  //     </div>
-  //   `;
-  // }
   template(): string {
     return `
       <div>
         <h1>User Form</h1>
-        <div>User name: ${this.model.get('name')}</div>
-        <div>User age: ${this.model.get('age')}</div>
         <input />
         <button>Click Me!</button>
       </div>
