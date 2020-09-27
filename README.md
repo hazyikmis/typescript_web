@@ -1,3 +1,8 @@
+# The Framework implemented in this app is very similar to (some parts) of:
+
+- Marionette https://marionettejs.com/
+- Backbone.js https://backbonejs.org/
+
 # Running TypeScript in the browser
 
 > parcel-bundler npm pack helps us run typescript in the browser!
