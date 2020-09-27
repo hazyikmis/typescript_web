@@ -52,6 +52,7 @@ want to watch for inside of our HTML snippet to the different functions that we 
       //'mouseenter:h1': this.onHeaderHover,
       // 'drag:div': this.onDragDiv,
       'click:.set-age': this.onSetAgeClick,
+      'click:.set-name': this.onSetNameClick,
     };
   }
 
@@ -70,6 +71,13 @@ want to watch for inside of our HTML snippet to the different functions that we 
     //console.log(this.model.get('age'));
   };
 
+  onSetNameClick = (): void => {
+    const input = this.parent.querySelector('input');
+    //console.log(input.value);
+    const name = input.value;
+    this.model.set({ name });
+  };
+
   // template(): string {
   //   return `
   //     <div>
@@ -86,7 +94,7 @@ want to watch for inside of our HTML snippet to the different functions that we 
       <div>User name: ${this.model.get('name')}</div>
         <div>User age: ${this.model.get('age')}</div>
         <input />
-        <button>Click Me!</button>
+        <button class='set-name'>Change Name</button>
         <button class='set-age'>Set Random Age</button>
       </div>
     `;
