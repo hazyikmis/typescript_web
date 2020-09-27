@@ -16,7 +16,7 @@ export class UserForm {
   }
   */
 
-  //In order to keep the constructor as simplw as possible:
+  //In order to keep the constructor as simply as possible:
   constructor(public parent: Element, public model: User) {
     //if something changes (some data) on model, this meas that "change" event triggered
     this.bindModel();
@@ -74,8 +74,11 @@ want to watch for inside of our HTML snippet to the different functions that we 
   onSetNameClick = (): void => {
     const input = this.parent.querySelector('input');
     //console.log(input.value);
-    const name = input.value;
-    this.model.set({ name });
+    //type-guard
+    if (input) {
+      const name = input.value;
+      this.model.set({ name });
+    }
   };
 
   // template(): string {
