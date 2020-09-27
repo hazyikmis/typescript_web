@@ -1,46 +1,6 @@
-import { User } from '../models/User';
+import { View } from './View';
 
-export class UserForm {
-  //we should tell this class exactly where to insert "user form". Rather than defining like that
-  //we can tell inside constructor parameters...
-  //parent: Element; //Element is the most generic class for insertion to DOM
-
-  //constructor(public parent: Element) {}
-  //constructor(public parent: Element, public model: User) {}
-  /*
-  constructor(public parent: Element, public model: User) {
-    //if something changes (some data) on model, this meas that "change" event triggered
-    this.model.on('change', () => {
-      this.render();
-    });
-  }
-  */
-
-  //In order to keep the constructor as simply as possible:
-  constructor(public parent: Element, public model: User) {
-    //if something changes (some data) on model, this meas that "change" event triggered
-    this.bindModel();
-  }
-
-  bindModel(): void {
-    this.model.on('change', () => {
-      this.render();
-    });
-  }
-
-  /*
-So we need to somehow express to typescript that hey we're going to return an object and 
-we don't necessarily know what the keys are going to be (for "eventsMap" method).
-So to do so I'm going to put down an object literal right here I'll put in square brackets
-and I'll say key all in string.
-That tells typescript that Hey we're gonna return an object we don't really know what the 
-keys are going to be but they're going to be strings and we're going to say that the value
-for everything inside that object will be a function that takes no arguments and returns
-nothing as is the case with on button click right here okay.  
-So this events map is essentially how we're going to relate the different events that we
-want to watch for inside of our HTML snippet to the different functions that we want to run.
-*/
-
+export class UserForm extends View {
   //eventsMap() {
   eventsMap(): { [key: string]: () => void } {
     //in this approach, "key"s should be parsed!
@@ -55,14 +15,6 @@ want to watch for inside of our HTML snippet to the different functions that we 
       'click:.set-name': this.onSetNameClick,
     };
   }
-
-  // onButtonClick(): void {
-  //   console.log('Hi there');
-  // }
-
-  // onHeaderHover(): void {
-  //   console.log('Header was hovered!');
-  // }
 
   //onSetAgeClick(): void {
   onSetAgeClick = (): void => {
@@ -81,15 +33,6 @@ want to watch for inside of our HTML snippet to the different functions that we 
     }
   };
 
-  // template(): string {
-  //   return `
-  //     <div>
-  //       <h1>User Form</h1>
-  //       <input />
-  //       <button>Click Me!</button>
-  //     </div>
-  //   `;
-  // }
   template(): string {
     return `
       <div>
@@ -101,30 +44,5 @@ want to watch for inside of our HTML snippet to the different functions that we 
         <button class='set-age'>Set Random Age</button>
       </div>
     `;
-  }
-
-  bindEvents(fragment: DocumentFragment): void {
-    const eventsMap = this.eventsMap();
-
-    for (let eventKey in eventsMap) {
-      const [eventName, selector] = eventKey.split(':'); //  eventName --> 'click and selector --> 'button
-
-      fragment.querySelectorAll(selector).forEach((element) => {
-        element.addEventListener(eventName, eventsMap[eventKey]);
-      });
-    }
-  }
-
-  render(): void {
-    this.parent.innerHTML = ''; //first remove all elements under parent, otherwise, in the 2nd or 3rd renders add new instances...
-    //normally Angular & React uses more clever ways when re-rendering elements on the DOM
-    //Bu we are directly clearing everything and re-rendering from scratch again...
-
-    const templateElement = document.createElement('template');
-    templateElement.innerHTML = this.template();
-
-    this.bindEvents(templateElement.content);
-
-    this.parent.append(templateElement.content);
   }
 }
