@@ -17,6 +17,7 @@ if (root) {
 */
 
 //testing UserEdit class, which nests UserShow & UserForm classes
+/*
 import { UserEdit } from './views/UserEdit';
 import { User } from './models/User';
 
@@ -30,3 +31,28 @@ if (root) {
 } else {
   throw new Error('Root element not found!');
 }
+*/
+
+//testing CollectionView & UserList classes
+import { Collection } from './models/Collection';
+import { User, UserProps } from './models/User';
+import { UserList } from './views/UserList';
+
+// const users = new Collection(
+//   'http://localhost:3000/users',
+//   (json: UserProps) => {
+//     return User.buildUser(json);
+//   }
+// );
+
+//no need to use as above, just call buildUserCollection
+const users = User.buildUserCollection();
+
+users.on('allUsersLoaded', () => {
+  const root = document.getElementById('root');
+  if (root) {
+    new UserList(root, users).render();
+  }
+});
+
+users.fetch();
